@@ -1,4 +1,4 @@
-#include "../headers/Cellule.hpp"
+#include "../headers/cell.hpp"
 
 Cellule::Cellule(int x, int y, bool state) {
     this->x = x;
