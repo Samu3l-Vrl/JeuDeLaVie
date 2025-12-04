@@ -1,7 +1,7 @@
 #pragma once 
 #include "headers/cell.hpp"
 
-class aliveCell : public Cellule {
+class aliveCell : public Cell {
     public:
         aliveCell();
         aliveCell(int x, int y);
