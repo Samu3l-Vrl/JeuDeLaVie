@@ -1,31 +1,31 @@
 #include "../headers/cell.hpp"
 
-Cellule::Cellule(int x, int y, bool state) {
+Cell::Cell(int x, int y, bool state) {
     this->x = x;
     this->y = y;
     this->state = state;
 }
 
-int Cellule::getX() {
+int Cell::getX() {
     return this->x;
 }
 
-int Cellule::getY() {
+int Cell::getY() {
     return this->y;
 }
 
-bool Cellule::getState() {
+bool Cell::getState() {
     return this->state;
 }
 
-void Cellule::setX(int x) {
+void Cell::setX(int x) {
     this->x = x;
 }
 
-void Cellule::setY(int y) {
+void Cell::setY(int y) {
     this->y = y;
 }
 
-void Cellule::setState(bool state) {
+void Cell::setState(bool state) {
     this->state = state;
 }
