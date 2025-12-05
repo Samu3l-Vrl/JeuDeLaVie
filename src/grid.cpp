@@ -12,7 +12,7 @@ Grid::~Grid() {
 
 int Grid::countNeighbors(int x, int y) {
     int nb_neighbors = 0;
-
+    
     for (int dx = -1; dx <= 1; ++dx) {
         for (int dy = -1; dy <= 1; ++dy) {
             if (dx == 0 && dy == 0) continue;
@@ -28,4 +28,25 @@ int Grid::countNeighbors(int x, int y) {
         } 
     }
     return nb_neighbors;
+}
+std::vector<std::vector<Cell>>& Grid::getGrid() {
+    return grid;
+}
+int Grid::getWidth() {
+    return width;
+}
+int Grid::getHeight() {
+    return height;
+}
+void Grid::setGrid() {
+    std::vector<std::vector<int>> newGrid = grid;
+
+    for (int x = 0; x < gridWidth; ++x) {
+        for (int y = 0; y < gridHeight; ++y){
+            int nb_neighbors = countNeighbors(x, y);
+            bool currentState = grid[x][y].getState();
+            bool newState = Rules::applyRules(currentState, nb_neighbors);
+            newGrid[x][y].setState(newState);
+        }
+        grid = newGrid;
 }

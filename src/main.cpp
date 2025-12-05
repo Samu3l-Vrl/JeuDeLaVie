@@ -6,12 +6,12 @@ int main() {
     std::vector<std::vector<int>> grid;
     f.readFile("fichier.txt", grid);
 
-    int gridWidth  = 100;
-    int gridHeight = 100;
-    const int cellSize = 10;
+    int gridWidth  = 1000;
+    int gridHeight = 1000;
+    const int cellSize = 5;
 
     sf::RenderWindow window(
-        sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize),
+        sf::VideoMode(gridWidth , gridHeight),
         "Game of Life"
     );
 
