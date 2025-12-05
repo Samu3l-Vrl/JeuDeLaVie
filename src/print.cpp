@@ -1,33 +1,38 @@
-    int gridWidth  = 1000;
-    int gridHeight = 1000;
-    const int cellSize = 5;
+    
+    void print::displayGrid(const vector<vector<cell>>& grid) { 
 
-    sf::RenderWindow window(
-        sf::VideoMode(gridWidth , gridHeight),
-        "Game of Life"
-    );
+        int gridWidth  = 1000;
+        int gridHeight = 1000;
+        const int cellSize = 5;
 
-    window.setVerticalSyncEnabled(false);
+        sf::RenderWindow window(
+            sf::VideoMode(gridWidth , gridHeight),
+            "Game of Life"
+        );
 
-    sf::RectangleShape cell(sf::Vector2f(cellSize - 1.f, cellSize - 1.f));
+        window.setVerticalSyncEnabled(false);
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        sf::RectangleShape cell(sf::Vector2f(cellSize - 1.f, cellSize - 1.f));
 
-        window.clear();
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
 
-        for (int x = 0; x < gridWidth; ++x) {
-            for (int y = 0; y < gridHeight; ++y) {
-                if (grid[x][y] == 1) {
-                    cell.setPosition(x * cellSize, y * cellSize);
-                    window.draw(cell);
+            window.clear();
+
+            for (int x = 0; x < gridWidth; ++x) {
+                for (int y = 0; y < gridHeight; ++y) {
+                    aliveCell c;
+                    if (grid[x][y]==c) {
+                        cell.setPosition(x * cellSize, y * cellSize);
+                        window.draw(cell);
+                    }
                 }
             }
-        }
 
-        window.display();
-    }
+            window.display();
+        }
+}

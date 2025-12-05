@@ -47,7 +47,16 @@ void Grid::setGrid() {
             int nb_neighbors = countNeighbors(x, y);
             bool currentState = grid[x][y].getState();
             bool newState = r.applyRules(currentState, nb_neighbors);
-            newGrid[x][y].setState(newState);
+            if(newState){
+                alivecell c;
+                newGrid[x][y] = c;
+            }
+                
+            else{
+                deadcell c;
+                newGrid[x][y] = c;
+            }
+            
         }
         grid = newGrid;
 }

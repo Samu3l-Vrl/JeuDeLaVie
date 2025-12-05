@@ -23,7 +23,7 @@ int aliveCell::getY() {
 }
 
 bool aliveCell::getState() {
-    return this->state;
+    return true;
 }
 
 void aliveCell::setX(int x) {

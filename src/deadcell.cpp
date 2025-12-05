@@ -23,7 +23,7 @@ int deadCell::getY() {
 }
 
 bool deadCell::getState() {
-    return this->state;
+    return false;
 }
 
 void deadCell::setX(int x) {
