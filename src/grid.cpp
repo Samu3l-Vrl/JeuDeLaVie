@@ -43,10 +43,16 @@ void Grid::setGrid() {
 
     for (int x = 0; x < gridWidth; ++x) {
         for (int y = 0; y < gridHeight; ++y){
+            rules r;
             int nb_neighbors = countNeighbors(x, y);
             bool currentState = grid[x][y].getState();
-            bool newState = Rules::applyRules(currentState, nb_neighbors);
+            bool newState = r.applyRules(currentState, nb_neighbors);
             newGrid[x][y].setState(newState);
         }
         grid = newGrid;
+}
+}
+void Grid::initializeGrid(vector<vector<Cell>>& grid) {
+    file f;
+    f.readFile("fichier.txt", grid);
 }

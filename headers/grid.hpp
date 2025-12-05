@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 #include "../headers/cell.hpp"
 
->>>>>>> c4c3171 (modif grid)
 #pragma once
 #include "../headers/cell.hpp"
 
@@ -15,11 +12,8 @@ class Grid {
     public : 
         Grid(int width, int height);
         ~Grid();
+        void initializeGrid(vector<vector<Cell>>& grid);
         int countNeighbors(int x, int y);
-<<<<<<< HEAD
-
-};
-=======
         void setGrid();
         std::vector<std::vector<Cell>>& getGrid();
         int getWidth();
@@ -28,4 +22,3 @@ class Grid {
 
 
 
->>>>>>> c4c3171 (modif grid)

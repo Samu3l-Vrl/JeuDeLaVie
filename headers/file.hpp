@@ -6,6 +6,6 @@ class file{
     public:
         file();
         ~file();
-        void readFile(const std::string& filename, std::vector<std::vector<int>>& grid);
+        void readFile(const std::string& filename, std::vector<std::vector<bool>>& grid);
 
 };
