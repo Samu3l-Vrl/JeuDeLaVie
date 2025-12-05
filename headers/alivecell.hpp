@@ -1,5 +1,5 @@
 #pragma once 
-#include "headers/cell.hpp"
+#include "../headers/cell.hpp"
 
 class aliveCell : public Cell {
     public:

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #pragma once
 
 class Grid {
@@ -12,3 +13,6 @@ class Grid {
         int countNeighbors(int x, int y);
 
 };
+=======
+#include "../headers/cell.hpp"
+>>>>>>> b8667a4 (ajout de file et main ainsi que le generateur de fichier)

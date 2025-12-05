@@ -1,3 +1,16 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<cmath>
+#include<algorithm>
+#include<fstream>
+#include<sstream>
+#include<random>
+#include<ctime>
+#include<chrono>
+#include<thread>
+#include <cstdlib>
+#include <SFML/Graphics.hpp>
 #pragma once
 
 class Cell {
