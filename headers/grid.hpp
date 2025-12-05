@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 #pragma once
+#include "../headers/cell.hpp"
 
 class Grid {
     private : 
@@ -13,6 +13,3 @@ class Grid {
         int countNeighbors(int x, int y);
 
 };
-=======
-#include "../headers/cell.hpp"
->>>>>>> b8667a4 (ajout de file et main ainsi que le generateur de fichier)
