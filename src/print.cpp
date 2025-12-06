@@ -1,8 +1,12 @@
-    
-    void print::displayGrid(const vector<vector<cell>>& grid) { 
+#include "../headers/print.hpp"
+#include "../headers/alivecell.hpp"
 
-        int gridWidth  = 1000;
-        int gridHeight = 1000;
+
+print::print(){}
+    void print::displayGrid(int width, int height,const std::vector<std::vector<Cell*>>& grid) { 
+
+        int gridWidth  = width;
+        int gridHeight = height;
         const int cellSize = 5;
 
         sf::RenderWindow window(
@@ -25,14 +29,13 @@
 
             for (int x = 0; x < gridWidth; ++x) {
                 for (int y = 0; y < gridHeight; ++y) {
-                    aliveCell c;
-                    if (grid[x][y]==c) {
+                    if (grid[x][y]->getState()==true) {
                         cell.setPosition(x * cellSize, y * cellSize);
                         window.draw(cell);
                     }
                 }
             }
-
+            sf::sleep(sf::milliseconds(100));
             window.display();
         }
 }

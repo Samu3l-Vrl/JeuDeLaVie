@@ -1,4 +1,8 @@
-class print{$
+#include "../headers/cell.hpp"
+#pragma once 
+
+class print{
 public:
-    void displayGrid(const std::vector<std::vector<cell>>& grid);
+    print();
+    void displayGrid(int width, int height,const std::vector<std::vector<Cell*>>& grid);
 };

@@ -1,16 +1,31 @@
-all: main
-
 CXX = g++
-override CXXFLAGS += -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -g -Wmost -Werror 
+CXXFLAGS = -std=c++17 -Wall -Wextra
 
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.cpp' -print | sed -e 's/ /\\ /g')
-HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
+# Bibliothèques SFML nécessaires
+SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-main: $(SRCS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o "$@"
+# Tous tes fichiers source
+SRC = \
+    src/alivecell.cpp \
+    src/deadcell.cpp \
+    src/grid.cpp \
+    src/print.cpp \
+    src/file.cpp \
+    src/jeudelavie.cpp \
+	src/rules.cpp
 
-main-debug: $(SRCS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -U_FORTIFY_SOURCE -O0 $(SRCS) -o "$@"
+OBJ = $(SRC:.cpp=.o)
+TARGET = jeu
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CXX) $(OBJ) -o $(TARGET) $(SFML_LIBS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f main main-debug
+	rm -f $(OBJ) $(TARGET)
+
+.PHONY: all clean

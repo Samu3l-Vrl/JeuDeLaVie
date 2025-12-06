@@ -1,6 +1,5 @@
-#pragma once
 #include "../headers/cell.hpp"
-#include "../headers/grid.hpp"
+#pragma once 
 
 class Rules {    
     public : 

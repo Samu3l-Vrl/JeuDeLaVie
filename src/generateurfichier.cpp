@@ -1,10 +1,9 @@
 #include<fstream>
 #include<iostream>
 #include<random>
+using namespace std;
+void generateFile(){
 
-using namespace std;    
-
-int main() {
     ofstream fichier("fichier.txt", ios::out | ios::trunc); // Open file in write mode, truncating existing content
     if (!fichier) {
         cerr << "Error opening file!" << endl;
@@ -23,4 +22,4 @@ for(int i = 0;i<x;i++){
 
     fichier.close(); // Close the file
     return 0;
-}
+} 
