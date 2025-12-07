@@ -17,6 +17,8 @@ class Grid {
         std::vector<std::vector<Cell*>>& getGrid();
         int getWidth();
         int getHeight();
+        void allocateGrid();
+
 };
 
 

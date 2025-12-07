@@ -9,10 +9,7 @@ Grid::Grid() {
     this->width = 0;
     this->height = 0;
 }
-Grid::Grid(int width, int height) {
-    this->width = width;
-    this->height = height;
-}
+
 
 Grid::~Grid() {
 
@@ -46,31 +43,50 @@ int Grid::getWidth() {
 int Grid::getHeight() {
     return height;
 }
+Grid::Grid(int width, int height) {
+    this->width = width;
+    this->height = height;
+    
+    grid.resize(width, std::vector<Cell*>(height, nullptr));
+}
+
+
+void Grid::allocateGrid() {
+    grid.resize(width, std::vector<Cell*>(height));
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            grid[x][y] = new deadCell(); // état par défaut
+        }
+    }
+}
+
 void Grid::stepGrid() {
-    std::vector<std::vector<Cell*>> newGrid = grid;
+    std::vector<std::vector<Cell*>> newGrid(width, std::vector<Cell*>(height, nullptr));
+    Rules r;
 
     for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y){
-            Rules r;
-            int nb_neighbors = countNeighbors(x, y);
+        for (int y = 0; y < height; ++y) {
             bool currentState = grid[x][y]->getState();
-            bool newState = r.applyRules(currentState, nb_neighbors);
-            if(newState){
-                
-                newGrid[x][y] = new aliveCell();
+            int neighbors = countNeighbors(x, y);
+            bool newState = r.applyRules(currentState, neighbors);
 
-            }
-                
-            else{
-                
+            if (newState)
+                newGrid[x][y] = new aliveCell();
+            else
                 newGrid[x][y] = new deadCell();
-            }
-            
         }
-        grid = newGrid;
+    }
+
+    // Supprimer l'ancienne grille
+    for (int x = 0; x < width; ++x)
+        for (int y = 0; y < height; ++y)
+            delete grid[x][y];
+
+    grid = newGrid;
 }
-}
+
+
 void Grid::initializeGrid() {
     file f;
-    f.readFile("fichier.txt", grid);
+    f.readFile(width, height, "fichier.txt", grid);
 }
