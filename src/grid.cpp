@@ -22,11 +22,10 @@ int Grid::countNeighbors(int x, int y) {
         for (int dy = -1; dy <= 1; ++dy) {
             if (dx == 0 && dy == 0) continue;// Skip the cell itself
 
-            int nx = x + dx;// Neighbor's x coordinate
-            int ny = y + dy;// Neighbor's y coordinate
-                    
+            int nx = (x + dx + width) % width;// Neighbor's x coordinate
+            int ny = (y + dy + height) % height;// Neighbor's y coordinate     
             if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-                if (grid[nx][ny]->getState()==true) {// check each neighbor is alive
+                if (grid[nx][ny]->getState()==true) { // check each neighbor is alive
                     nb_neighbors++;
                 }
             }
@@ -86,7 +85,8 @@ void Grid::stepGrid() {
 }
 
 
-void Grid::initializeGrid() {
+void Grid::initializeGrid(std::string name ) {
     file f;
-    f.readFile(width, height, "fichier.txt", grid);// Read initial configuration from file
+   
+    f.readFile(width, height, name, grid);// Read initial configuration from file
 }

@@ -11,7 +11,7 @@ class Grid {
         Grid();
         Grid(int width, int height);
         ~Grid();
-        void initializeGrid();
+        void initializeGrid(std::string name);
         int countNeighbors(int x, int y);
         void stepGrid();
         std::vector<std::vector<Cell*>>& getGrid();

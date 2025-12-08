@@ -39,6 +39,6 @@ void print::displayGrid(int width, int height, int cellSize, Grid& g)
         window.display();// Display the contents of the window
 
         g.stepGrid();// Update the grid to the next generation
-        sf::sleep(sf::milliseconds(1000));// Pause for a short duration to control the speed of the simulation
+        sf::sleep(sf::milliseconds(10));// Pause for a short duration to control the speed of the simulation
     }
 }
