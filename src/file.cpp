@@ -1,38 +1,35 @@
-#include"../headers/file.hpp"
+#include "../headers/file.hpp"
 #include "../headers/alivecell.hpp"
 #include "../headers/deadcell.hpp"
+#include "../headers/obstacle.hpp"
 
-file::file(){
-}   
-file::~file(){
-}
-void file::readFile(int width, int height, const std::string& filename, std::vector<std::vector<Cell*>>& g) {
-    std::ifstream fichier(filename);//open file in read mode
+file::file() {}
+file::~file() {}
+
+void file::readFile(int width, int height, const std::string& filename, std::vector<std::vector<Cell*>>& g){// Read grid configuration from file
+    std::ifstream fichier(filename);
     if (!fichier) {
         std::cerr << "Error opening file!" << std::endl;
         return;
     }
 
-    g.resize(height, std::vector<Cell*>(width, nullptr));// resize grid at given dimensions
+    int value;
 
-    std::string line;
-    int y = 0;
-    while (getline(fichier, line) && y < height) { // read file line by line
-        std::istringstream iss(line);
-        for (int x = 0; x < width; ++x) { // read each value in the line
-            int value;
-            if (!(iss >> value)) {// if reading fails, set default value to 0
-                value = 0;
-            }
-            if (value == 1){
-                g[y][x] = new aliveCell();// create alive cell
-            }
-            else{
-                g[y][x] = new deadCell();// create dead cell
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+
+            fichier >> value;
+
+            delete g[y][x]; // Free existing cell
+
+            if (value == 1)
+                g[y][x] = new aliveCell();
+            else if (value == 2)
+                g[y][x] = new obstacle();
+            else
+                g[y][x] = new deadCell();
         }
     }
-        y++;
-    }
 
-    fichier.close();// close file
+    fichier.close();
 }

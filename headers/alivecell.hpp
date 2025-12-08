@@ -7,6 +7,6 @@ class aliveCell : public Cell {
         ~aliveCell();
         
         bool getState() const override ;
-        
+        int getObs()const override;
         void setState(bool state) override;
 };

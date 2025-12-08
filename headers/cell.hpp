@@ -17,13 +17,13 @@ class Cell {
     protected:
         
         bool state; // true for alive, false for dead 
-
+        int obs; // 2 for obstacle
     public:
         Cell(){}
         Cell(bool state) : state(state){}
 
         virtual bool getState() const = 0;
-
+        virtual int getObs() const = 0;
 
         virtual void setState(bool state) = 0;
 

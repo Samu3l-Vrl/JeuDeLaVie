@@ -12,7 +12,8 @@ SRC = \
     src/print.cpp \
     src/file.cpp \
     src/jeudelavie.cpp \
-	src/rules.cpp
+	src/rules.cpp\
+    src/obstacle.cpp
 
 OBJ = $(SRC:.cpp=.o)
 TARGET = jeu

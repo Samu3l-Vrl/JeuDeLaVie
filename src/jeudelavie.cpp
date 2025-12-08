@@ -1,5 +1,6 @@
 #include "../headers/alivecell.hpp"
 #include "../headers/deadcell.hpp"
+#include "../headers/obstacle.hpp"
 #include"../headers/file.hpp"
 #include "../headers/grid.hpp"
 #include "../headers/print.hpp"
@@ -8,8 +9,8 @@
 using namespace std;
 string name = "fichier.txt";
 string nametest = "glider.txt";
-int x = 20; // Example dimensions
-int y = 20;
+int x = 200; // Example dimensions
+int y = 200;
 void generateFile(){
 
     ofstream fichier(name, ios::out | ios::trunc); // Open file in write mode, deleting existing content
@@ -19,9 +20,9 @@ void generateFile(){
     }
 
 
-for(int i = 0;i<x;i++){
-    for(int j = 0;j<y;j++){
-        int a = rand() % 2; // Randomly generate 0 or 1
+for(int i = 0;i<y;i++){
+    for(int j = 0;j<x;j++){
+        int a = rand() % 2; // Randomly generate 0, 1, or 2
         fichier << a << " ";// Write to file
     }
     fichier << endl;

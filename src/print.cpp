@@ -1,44 +1,49 @@
 #include "../headers/print.hpp"
 #include "../headers/grid.hpp"
-#include <SFML/Graphics.hpp>
 
-print::print(){}
+print::print() {}
 
-void print::displayGrid(int width, int height, int cellSize, Grid& g)
-{
-
+void print::displayGrid(int width, int height, int cellSize, Grid& g){// Display the grid using SFML
     sf::RenderWindow window(
         sf::VideoMode(width * cellSize, height * cellSize),
         "Game of Life"
-    );// Create the main window 
+    );// Create the window
 
-    sf::RectangleShape cell(sf::Vector2f(cellSize - 1, cellSize - 1));// Create a square shape for cells
-    cell.setFillColor(sf::Color::White);// Set cell color
+    sf::RectangleShape cell(sf::Vector2f(cellSize - 1, cellSize - 1));// Cell rectangle
 
-    while (window.isOpen()) 
-    {
+    while (window.isOpen()) {
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-        }// keep open until the window is closed
+        }// Event handling
 
-        window.clear(sf::Color::Black);// Clear the window with black color
+        window.clear(sf::Color::Black);// Clear the window 
 
-        auto& grid = g.getGrid();// Get the grid from the Grid object
+        auto& grid = g.getGrid();// Get the grid
 
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y) {
-                if (grid[x][y]->getState()) {// If the cell is alive
-                    cell.setPosition(x * cellSize, y * cellSize);// Set cell position
-                    window.draw(cell);// Draw alive cells
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+
+                if (grid[y][x]->getObs() == 2) {
+                    cell.setFillColor(sf::Color(150, 150, 150)); // obstacle grey
                 }
+                else if (grid[y][x]->getState() == true) {
+                    cell.setFillColor(sf::Color::White);
+                }
+                else {
+                    continue; // dead -> do not draw
+                }
+
+                cell.setPosition(x * cellSize, y * cellSize);// Set position
+                window.draw(cell);  // Draw the cell
             }
         }
 
-        window.display();// Display the contents of the window
+        window.display();
 
-        g.stepGrid();// Update the grid to the next generation
-        sf::sleep(sf::milliseconds(10));// Pause for a short duration to control the speed of the simulation
+        g.stepGrid();
+        sf::sleep(sf::milliseconds(100));
     }
 }

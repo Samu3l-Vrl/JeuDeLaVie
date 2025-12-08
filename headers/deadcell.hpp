@@ -7,6 +7,6 @@ class deadCell : public Cell {
         ~deadCell();
         
         bool getState() const override ;
-        
+        int getObs()const override;
         void setState(bool state) override;
 };

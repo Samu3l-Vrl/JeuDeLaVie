@@ -1,92 +1,81 @@
 #include "../headers/grid.hpp"
 #include "../headers/alivecell.hpp"
 #include "../headers/deadcell.hpp"
-#include "../headers/cell.hpp"
-#include"../headers/file.hpp"
+#include "../headers/obstacle.hpp"
+#include "../headers/file.hpp"
 #include "../headers/rules.hpp"
 
-Grid::Grid() {
-    this->width = 0;
-    this->height = 0;
+Grid::Grid(int width, int height)
+    : width(width), height(height)
+{
+    grid.resize(height, std::vector<Cell*>(width, nullptr));// Initialize grid with nullptrs
+    allocateGrid();
 }
-
 
 Grid::~Grid() {
-
+    for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
+            delete grid[y][x];// Clean up allocated cells
 }
 
-int Grid::countNeighbors(int x, int y) {
-    int nb_neighbors = 0;
-    
-    for (int dx = -1; dx <= 1; ++dx) {
-        for (int dy = -1; dy <= 1; ++dy) {
-            if (dx == 0 && dy == 0) continue;// Skip the cell itself
-
-            int nx = (x + dx + width) % width;// Neighbor's x coordinate
-            int ny = (y + dy + height) % height;// Neighbor's y coordinate     
-            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-                if (grid[nx][ny]->getState()==true) { // check each neighbor is alive
-                    nb_neighbors++;
-                }
-            }
-        } 
-    }
-    return nb_neighbors;
-}
-std::vector<std::vector<Cell*>>& Grid::getGrid() {
-    return grid;
-}
-int Grid::getWidth() {
-    return width;
-}
-int Grid::getHeight() {
-    return height;
-}
-Grid::Grid(int width, int height) {
-    this->width = width;
-    this->height = height;
-    
-    grid.resize(width, std::vector<Cell*>(height, nullptr));// Initialize grid with nullptrs
+void Grid::allocateGrid() {
+    for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
+            grid[y][x] = new deadCell();// Default to dead cells
 }
 
+int Grid::countNeighbors(int x, int y) {// Count alive neighbors 
+    int count = 0;
 
-void Grid::allocateGrid() { // Allocate memory for each cell in the grid
-    grid.resize(width, std::vector<Cell*>(height));
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            grid[x][y] = new deadCell(); 
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            if (dx == 0 && dy == 0) continue;
+
+            int nx = (x + dx + width)  % width;
+            int ny = (y + dy + height) % height;
+
+            if (grid[ny][nx]->getState())
+                count++;
         }
     }
+
+    return count;
 }
 
-void Grid::stepGrid() {
-    std::vector<std::vector<Cell*>> newGrid(width, std::vector<Cell*>(height, nullptr));// Create a new grid for the next state
+void Grid::stepGrid() {// Advance the grid by one generation
+    std::vector<std::vector<Cell*>> newGrid(height, std::vector<Cell*>(width));
     Rules r;
 
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
-            bool currentState = grid[x][y]->getState();// Get current state of the cell
-            int neighbors = countNeighbors(x, y);// Count alive neighbors
-            bool newState = r.applyRules(currentState, neighbors);// Apply rules to determine new state
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
 
-            if (newState)
-                newGrid[x][y] = new aliveCell();// Create a new alive cell
-            else
-                newGrid[x][y] = new deadCell();// Create a new dead cell
+            if (grid[y][x]->getObs() == 2) {
+                newGrid[y][x] = new obstacle();
+                continue;
+            }
+
+            bool alive = grid[y][x]->getState();// Current state
+            int neighbors = countNeighbors(x, y);// Count alive neighbors
+            bool next = r.applyRules(alive, neighbors);// Determine next state
+
+            if (next) newGrid[y][x] = new aliveCell();// Alive in next generation
+            else     newGrid[y][x] = new deadCell();// Dead in next generation
         }
     }
 
+    // delete old grid
+    for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
+            delete grid[y][x];
 
-    for (int x = 0; x < width; ++x)
-        for (int y = 0; y < height; ++y)
-            delete grid[x][y];// delete the old grid 
-
-    grid = newGrid;// Update the grid to the new state
+    grid = newGrid;
 }
 
-
-void Grid::initializeGrid(std::string name ) {
+void Grid::initializeGrid(std::string name) {// Initialize grid from file
     file f;
-   
-    f.readFile(width, height, name, grid);// Read initial configuration from file
+    f.readFile(width, height, name, grid);
 }
+
+std::vector<std::vector<Cell*>>& Grid::getGrid() { return grid; }// Accessor for the grid
+int Grid::getWidth() { return width; }// Accessor for width
+int Grid::getHeight() { return height; }// Accessor for height
